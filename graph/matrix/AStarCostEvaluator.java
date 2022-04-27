@@ -4,12 +4,6 @@ import model.ICostEvaluator;
 import model.IEdge;
 import model.INode;
 
-/**
- * An implementation for a graph in matrix form.
- * 
- * @author Kevin Wang
- *
- */
 public class AStarCostEvaluator implements ICostEvaluator {
 
 	volatile boolean enabled = true;

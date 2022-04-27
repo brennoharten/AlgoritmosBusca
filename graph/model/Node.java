@@ -98,49 +98,31 @@ public class Node implements INode {
 		return predecessor;
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void setPredecessor(INode node) {
 		this.predecessor = node;
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public int getCost() {
 		return this.cost;
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public void setCost(int cost) {
 		this.cost = cost;
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public int getHeuristic() {
 		return heuristic;
 	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
+
 	@Override
 	public void setHeuristic(int heuristic) {
 		this.heuristic = heuristic;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -149,7 +131,7 @@ public class Node implements INode {
 		sb.append(cost);
 		sb.append(",");
 		sb.append(heuristic);
-		sb.append(")");;
+		sb.append(")");
 		return sb.toString();
 	}
 

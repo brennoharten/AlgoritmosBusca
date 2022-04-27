@@ -1,14 +1,6 @@
 package model;
 
 import java.util.Collection;
-
-/**
- * Defines a graph node. In graph theory, a graph contains nodes and edges, the nodes
- * are connected to each other through edges.
- *  
- * @author Kevin Wang
- *
- */
 public interface INode {
 
 	/**

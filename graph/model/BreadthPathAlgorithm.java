@@ -2,9 +2,9 @@ package model;
 
 import java.util.Collection;
 import java.util.Comparator;
-
 import util.BinaryHeap;
-public class AStarPathAlgorithm implements IPathAlgorithm {
+
+public class BreadthPathAlgorithm implements IPathAlgorithm {
 
 	private ICostEvaluator evaluator;
 	private final BinaryHeap<INode> binaryHeap = new BinaryHeap<INode>(new Comparator<INode>() {
@@ -77,5 +77,4 @@ public class AStarPathAlgorithm implements IPathAlgorithm {
 	public void setEvaluator(ICostEvaluator evaluator) {
 		this.evaluator = evaluator;
 	}
-
 }
