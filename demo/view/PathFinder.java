@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import matrix.AStarCostEvaluator;
-import matrix.DijkstraCostEvaluator;
+import matrix.BreadthCostEvaluator;
 import model.ICostEvaluator;
 import model.XAStarPathAlgorithm;
 import model.XMatrix;
@@ -77,41 +77,47 @@ public class PathFinder {
 		final Coordinator coordinator = new Coordinator();
 		coordinator.setControlPanel(controlPanel);
 
-		final DijkstraCostEvaluator evaluator1 = new DijkstraCostEvaluator();
+		final AStarCostEvaluator evaluator1 = new AStarCostEvaluator();
 		final XAStarPathAlgorithm pathAlgorithm1 = new XAStarPathAlgorithm();
 		pathAlgorithm1.setEvaluator(evaluator1);
 		final Canvas canvas1 = createCanvas(parameters, evaluator1);
 		final CanvasPanel canvasPanel1 = new CanvasPanel("A*", canvas1);
 
-		final DijkstraCostEvaluator evaluator2 = new DijkstraCostEvaluator();
+		final BreadthCostEvaluator evaluator2 = new BreadthCostEvaluator();
 		final XAStarPathAlgorithm pathAlgorithm2 = new XAStarPathAlgorithm();
 		pathAlgorithm2.setEvaluator(evaluator2);
 		final Canvas canvas2 = createCanvas(parameters, evaluator2);
-		final CanvasPanel canvasPanel2 = new CanvasPanel("Dijkstra", canvas2);
+		final CanvasPanel canvasPanel2 = new CanvasPanel("Busca Largura", canvas2);
 		
-		final DijkstraCostEvaluator evaluator3 = new DijkstraCostEvaluator();
+		final BreadthCostEvaluator evaluator3 = new BreadthCostEvaluator();
 		final XAStarPathAlgorithm pathAlgorithm3 = new XAStarPathAlgorithm();
 		pathAlgorithm3.setEvaluator(evaluator3);
 		final Canvas canvas3 = createCanvas(parameters, evaluator3);
-		final CanvasPanel canvasPanel3 = new CanvasPanel("Teste1", canvas3);
+		final CanvasPanel canvasPanel3 = new CanvasPanel("Busca Profundida", canvas3);
 
-		final DijkstraCostEvaluator evaluator4 = new DijkstraCostEvaluator();
+		final BreadthCostEvaluator evaluator4 = new BreadthCostEvaluator();
 		final XAStarPathAlgorithm pathAlgorithm4 = new XAStarPathAlgorithm();
 		pathAlgorithm4.setEvaluator(evaluator4);
 		final Canvas canvas4 = createCanvas(parameters, evaluator4);
-		final CanvasPanel canvasPanel4 = new CanvasPanel("Teste2", canvas4);
+		final CanvasPanel canvasPanel4 = new CanvasPanel("Busca Menor Custo", canvas4);
 
-		final DijkstraCostEvaluator evaluator5 = new DijkstraCostEvaluator();
+		final BreadthCostEvaluator evaluator5 = new BreadthCostEvaluator();
 		final XAStarPathAlgorithm pathAlgorithm5 = new XAStarPathAlgorithm();
 		pathAlgorithm5.setEvaluator(evaluator5);
 		final Canvas canvas5 = createCanvas(parameters, evaluator5);
-		final CanvasPanel canvasPanel5 = new CanvasPanel("Teste3", canvas5);
+		final CanvasPanel canvasPanel5 = new CanvasPanel("Busca Custo Uniforme", canvas5);
 
-		final DijkstraCostEvaluator evaluator6 = new DijkstraCostEvaluator();
+		final BreadthCostEvaluator evaluator6 = new BreadthCostEvaluator();
 		final XAStarPathAlgorithm pathAlgorithm6 = new XAStarPathAlgorithm();
 		pathAlgorithm6.setEvaluator(evaluator6);
 		final Canvas canvas6 = createCanvas(parameters, evaluator6);
-		final CanvasPanel canvasPanel6 = new CanvasPanel("Teste4", canvas6);
+		final CanvasPanel canvasPanel6 = new CanvasPanel("Bidirecional", canvas6);
+
+		final BreadthCostEvaluator evaluator7 = new BreadthCostEvaluator();
+		final XAStarPathAlgorithm pathAlgorithm7 = new XAStarPathAlgorithm();
+		pathAlgorithm7.setEvaluator(evaluator7);
+		final Canvas canvas7 = createCanvas(parameters, evaluator7);
+		final CanvasPanel canvasPanel7 = new CanvasPanel("Aprofundamento Iterativo", canvas7);
 		
 		coordinator.add(canvas1, pathAlgorithm1, evaluator1);
 		coordinator.add(canvas2, pathAlgorithm2, evaluator2);
@@ -119,6 +125,7 @@ public class PathFinder {
 		coordinator.add(canvas4, pathAlgorithm4, evaluator4);
 		coordinator.add(canvas5, pathAlgorithm5, evaluator5);
 		coordinator.add(canvas6, pathAlgorithm6, evaluator6);
+		coordinator.add(canvas7, pathAlgorithm7, evaluator7);
 		PropertyChangeListener propertyListener = new PropertyChangeListener() {
 			
 			@Override
@@ -144,6 +151,9 @@ public class PathFinder {
 					else if (source == canvas6) {
 						canvasPanel6.setStatus(null);
 					}
+					else if (source == canvas7) {
+						canvasPanel7.setStatus(null);
+					}
 				}
 				else if (propertyName.equals(AppConstant.SearchCompleted)) {
 					if (source == canvas1) {
@@ -163,6 +173,9 @@ public class PathFinder {
 					}
 					else if (source == canvas6) {
 						canvasPanel6.setStatus(format(canvas6.getMatrix()));
+					}
+					else if (source == canvas7) {
+						canvasPanel7.setStatus(format(canvas7.getMatrix()));
 					}
 				}
 			}
@@ -196,6 +209,7 @@ public class PathFinder {
 		coordinator.addPropertyChangeListener(canvas4, propertyListener);
 		coordinator.addPropertyChangeListener(canvas5, propertyListener);
 		coordinator.addPropertyChangeListener(canvas6, propertyListener);
+		coordinator.addPropertyChangeListener(canvas7, propertyListener);
 
 		JPanel overallPanel = new JPanel(new BorderLayout());
 		overallPanel.add(controlPanel, BorderLayout.WEST);
@@ -206,6 +220,7 @@ public class PathFinder {
 		mainPanel.add(canvasPanel4);
 		mainPanel.add(canvasPanel5);
 		mainPanel.add(canvasPanel6);
+		mainPanel.add(canvasPanel7);
 		overallPanel.add(mainPanel, BorderLayout.CENTER);
 		/* JPanel mainPanel2 = new JPanel(new GridLayout(1,0,10,10));
 		mainPanel2.add(canvasPanel1);

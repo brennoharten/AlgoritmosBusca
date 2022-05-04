@@ -7,7 +7,7 @@ import util.BinaryHeap;
 public class BreadthPathAlgorithm implements IPathAlgorithm {
 
 	private ICostEvaluator evaluator;
-	private final BinaryHeap<INode> binaryHeap = new BinaryHeap<INode>(new Comparator<INode>() {
+	private final BinaryHeap<INode> listaNode = new BinaryHeap<INode>(new Comparator<INode>() {
 		@Override
 		public int compare(INode o1, INode o2) {
 			return (o1.getCost() + o1.getHeuristic() - (o2.getCost() + o2.getHeuristic()));
@@ -20,7 +20,7 @@ public class BreadthPathAlgorithm implements IPathAlgorithm {
 			return search(start, end);
 		}
 		finally {
-			binaryHeap.clear();
+			listaNode.clear();
 		}
 	}
 
@@ -29,9 +29,10 @@ public class BreadthPathAlgorithm implements IPathAlgorithm {
 		node.setVisited(true);
 		node.setCost(0);
 
-		binaryHeap.add(node);
-		while (binaryHeap.size() > 0) {
-			node = binaryHeap.remove();
+		listaNode.add(node);
+		while (listaNode.size() > 0) {
+			node = listaNode.remove();
+			if (node == null)
 			node.setOpen(false);
 			Collection<IEdge> edges = node.getEdges();
 			for (IEdge edge : edges) {
@@ -44,16 +45,16 @@ public class BreadthPathAlgorithm implements IPathAlgorithm {
 					candidate.setVisited(true);
 					candidate.setCost(cost);
 					candidate.setPredecessor(node);
-					binaryHeap.add(candidate);
+					listaNode.add(candidate);
 				}
 				else if (cost < candidate.getCost()) {
 					candidate.setCost(cost);
 					candidate.setPredecessor(node);
-					binaryHeap.remove(candidate);
-					binaryHeap.add(candidate);
+					listaNode.remove(candidate);
+					listaNode.add(candidate);
 				}
 			}
-			if (binaryHeap.contains(end)) {
+			if (listaNode.contains(end)) {
 				markPath(start, end);
 				return true;
 			}
